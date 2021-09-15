@@ -1,2 +1,3 @@
-# nomadcoin
- Making a Cryptocurrency using the Go programming language
+# Nomadcoin
+
+Making a Cryptocurrency using the Go programming language
