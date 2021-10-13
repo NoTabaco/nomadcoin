@@ -11,13 +11,13 @@ import (
 )
 
 type Block struct {
-	Height     int    `json:"height"`
-	Data       string `json:"data"`
-	Hash       string `json:"hash"`
-	PrevHash   string `json:"prevHash,omitempty"`
-	Difficulty int    `json:"difficulty"`
-	Nonce      int    `json:"nonce"`
-	Timestamp  int    `json:"timestamp"`
+	Height       int    `json:"height"`
+	Hash         string `json:"hash"`
+	PrevHash     string `json:"prevHash,omitempty"`
+	Difficulty   int    `json:"difficulty"`
+	Nonce        int    `json:"nonce"`
+	Timestamp    int    `json:"timestamp"`
+	Transactions []*Tx  `json:"transactions"`
 }
 
 func (b *Block) persist() {
@@ -55,14 +55,14 @@ func (b *Block) mine() {
 	}
 }
 
-func createBlock(data string, prevHash string, height int) *Block {
+func createBlock(prevHash string, height int) *Block {
 	block := &Block{
-		Height:     height + 1,
-		Data:       data,
-		Hash:       "",
-		PrevHash:   prevHash,
-		Difficulty: Blockchain().difficulty(),
-		Nonce:      0,
+		Height:       height + 1,
+		Hash:         "",
+		PrevHash:     prevHash,
+		Difficulty:   Blockchain().difficulty(),
+		Nonce:        0,
+		Transactions: []*Tx{makeCoinbaseTx("nico")},
 	}
 	block.mine()
 	block.persist()
