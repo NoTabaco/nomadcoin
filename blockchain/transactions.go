@@ -12,7 +12,7 @@ const (
 )
 
 type mempool struct {
-	Txs []*Tx
+	Txs []*Tx `json:"txs"`
 }
 
 var Mempool *mempool = &mempool{}
@@ -95,4 +95,12 @@ func (m *mempool) AddTx(to string, amount int) error {
 	}
 	m.Txs = append(m.Txs, tx)
 	return nil
+}
+
+func (m *mempool) TxToConfirm() []*Tx {
+	coinbase := makeCoinbaseTx("nico")
+	txs := m.Txs
+	txs = append(txs, coinbase)
+	m.Txs = nil
+	return txs
 }

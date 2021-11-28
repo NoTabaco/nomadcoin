@@ -55,13 +55,13 @@ func (b *Block) mine() {
 
 func createBlock(prevHash string, height int) *Block {
 	block := &Block{
-		Height:       height + 1,
-		Hash:         "",
-		PrevHash:     prevHash,
-		Difficulty:   Blockchain().difficulty(),
-		Nonce:        0,
-		Transactions: []*Tx{makeCoinbaseTx("nico")},
+		Height:     height + 1,
+		Hash:       "",
+		PrevHash:   prevHash,
+		Difficulty: Blockchain().difficulty(),
+		Nonce:      0,
 	}
+	block.Transactions = Mempool.TxToConfirm()
 	block.mine()
 	block.persist()
 	return block
